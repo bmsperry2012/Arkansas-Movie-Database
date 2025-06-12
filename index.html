@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arkansas Film Connections</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+</head>
+<body>
+    <h1>Arkansas Film Connections</h1>
+    <nav>
+        <button onclick="showTab('movies')">🎬 Movies</button>
+        <button onclick="showTab('actors')">⭐ Actors</button>
+        <button onclick="showTab('submit')">✍️ Submit New</button>
+    </nav>
+
+    <section id="moviesTab" class="tab">
+        <h2>Movies with Ties to Arkansas</h2>
+        <ul id="movieList"></ul>
+        <div id="movieDetails"></div>
+    </section>
+
+    <section id="actorsTab" class="tab" style="display:none;">
+        <h2>Actors with Ties to Arkansas</h2>
+        <ul id="actorList"></ul>
+        <div id="actorDetails"></div>
+    </section>
+
+    <section id="submitTab" class="tab" style="display:none;">
+        <h2>Submit New Movie/Actor</h2>
+        <form id="submissionForm">
+            <label>Type:
+                <select name="type">
+                    <option value="movie">Movie</option>
+                    <option value="actor">Actor</option>
+                </select>
+            </label><br>
+            <label>Name: <input type="text" name="name" required></label><br>
+            <label>Notes: <textarea name="notes"></textarea></label><br>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="submissionStatus"></div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

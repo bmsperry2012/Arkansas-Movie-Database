@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f9f9f9;
+}
+
+h1 {
+    text-align: center;
+}
+
+nav {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav button {
+    padding: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+li {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
+
+#movieDetails, #actorDetails {
+    margin-top: 20px;
+}
+
+img {
+    max-width: 200px;
+    display: block;
+    margin: 10px 0;
+}
