@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Entry</title>
+</head>
+<body>
+    <h1>✍️ Submit a New Movie or Actor</h1>
+    <form id="submissionForm">
+        <label>Type:
+            <select name="type">
+                <option value="movie">Movie</option>
+                <option value="actor">Actor</option>
+            </select>
+        </label><br>
+        <label>Name: <input type="text" name="name" required></label><br>
+        <label>Notes: <textarea name="notes"></textarea></label><br>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="submissionStatus"></div>
+    <script src="script.js"></script>
+</body>
+</html>
