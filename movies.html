@@ -2,12 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Arkansas Movies</title>
-    <script src="script.js"></script>
+    <title>Arkansas Movie Connections</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+        .movie-list { list-style: none; padding: 0; }
+        .movie-list li { cursor: pointer; padding: 10px; background: #fff; margin: 5px 0; border-radius: 5px; }
+        .movie-list li:hover { background: #eaeaea; }
+        .movie-details { margin-top: 20px; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        img { max-width: 200px; display: block; margin-bottom: 10px; }
+    </style>
 </head>
 <body>
-    <h1>🎬 Movies with Ties to Arkansas</h1>
-    <ul id="movieList"></ul>
-    <div id="movieDetails"></div>
+
+    <h1>Movies with Ties to Arkansas</h1>
+    <ul class="movie-list" id="movieList">
+        <!-- Movie list will be populated here -->
+    </ul>
+
+    <div class="movie-details" id="movieDetails" style="display:none;"></div>
+
+    <script>
+        const apiKey = '257c2dffd5a19ea29083b6b181ceedb0'; //
+
+        const movies = [
+            { title: "True Grit", arkansasTie: "Filmed in Yellville and other parts of Arkansas." },
+            { title: "Sling Blade", arkansasTie: "Filmed in Benton, Arkansas. Directed by Arkansas native Billy Bob Thornton." },
+            { title: "A Soldier’s Story", arkansasTie: "Filmed in Clarendon and Little Rock, Arkansas." },
+            { title: "Gone with the Wind", arkansasTie: "Author Margaret Mitchell had family roots in Arkansas." },
+            { title: "The Legend of Boggy Creek", arkansasTie: "Set and filmed in Fouke, Arkansas." },
+            { title: "Mud", arkansasTie: "Filmed in and around Dumas and De Witt, Arkansas." },
+            { title: "Walk the Line", arkansasTie: "Johnny Cash was born in Kingsland, Arkansas." },
+            { title: "Great Balls of Fire!", arkansasTie: "Jerry Lee Lewis was born in nearby Louisiana but performed extensively in Arkansas." },
+            { title: "The Firm", arkansasTie: "Filmed in parts of Marion and West Memphis, Arkansas." },
+            { title: "Boxcar Bertha", arkansasTie: "Set partially in Arkansas." },
+            { title: "The Town That Dreaded Sundown", arkansasTie: "Based on true events in Texarkana, Arkansas." },
+            { title: "Come Morning", arkansasTie: "Filmed in Arkansas by native Derrick Sims." },
+            { title: "U.S. Marshals", arkansasTie: "Some scenes filmed near the Arkansas border." },
+            { title: "Winter's Bone", arkansasTie: "Filmed in the Ozark region, bordering Arkansas." },
+            { title: "God’s Not Dead 2", arkansasTie: "Filmed in Little Rock, Arkansas." },
+            { title: "The Quiet", arkansasTie: "Features Arkansas-raised actor Shawn Ashmore." },
+            { title: "Elizabethtown", arkansasTie: "Director Cameron Crowe spent part of his youth in Arkansas." },
+            { title: "The Client", arkansasTie: "Set and filmed partially in Arkansas." },
+            { title: "Shotgun Stories", arkansasTie: "Filmed in England, Arkansas." },
+            { title: "Billy the Kid", arkansasTie: "Features Arkansas actor Michael J. Pollard." }
+        ];
+
+        const movieList = document.getElementById('movieList');
+        const movieDetails = document.getElementById('movieDetails');
+
+        movies.forEach((movie, index) => {
+            const li = document.createElement('li');
+            li.textContent = movie.title;
+            li.addEventListener('click', () => fetchMovieInfo(movie));
+            movieList.appendChild(li);
+        });
+
+        function fetchMovieInfo(movie) {
+            fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(movie.title)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.results.length > 0) {
+                        const movieData = data.results[0];
+                        const posterPath = movieData.poster_path ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}` : '';
+                        const description = movieData.overview || "No description available.";
+                        const html = `
+                            <h2>${movie.title}</h2>
+                            ${posterPath ? `<img src="${posterPath}" alt="${movie.title} poster">` : ''}
+                            <p><strong>Description:</strong> ${description}</p>
+                            <p><strong>Arkansas Connection:</strong> ${movie.arkansasTie}</p>
+                        `;
+                        movieDetails.innerHTML = html;
+                        movieDetails.style.display = 'block';
+                    } else {
+                        movieDetails.innerHTML = `<h2>${movie.title}</h2><p>No additional movie data found.</p><p><strong>Arkansas Connection:</strong> ${movie.arkansasTie}</p>`;
+                        movieDetails.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching movie info:', error);
+                    movieDetails.innerHTML = `<h2>${movie.title}</h2><p>Error retrieving movie info.</p>`;
+                    movieDetails.style.display = 'block';
+                });
+        }
+    </script>
 </body>
 </html>
