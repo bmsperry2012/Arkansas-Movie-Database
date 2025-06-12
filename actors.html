@@ -2,12 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Arkansas Actors</title>
-    <script src="script.js"></script>
+    <title>Arkansas Actors & Actresses</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f7f7f7; }
+        .actor-list { list-style: none; padding: 0; }
+        .actor-list li { cursor: pointer; padding: 10px; background: #fff; margin: 5px 0; border-radius: 5px; }
+        .actor-list li:hover { background: #e0e0e0; }
+        .actor-details { margin-top: 20px; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        img { max-width: 200px; display: block; margin-bottom: 10px; border-radius: 10px; }
+    </style>
 </head>
 <body>
-    <h1>⭐ Actors with Ties to Arkansas</h1>
-    <ul id="actorList"></ul>
-    <div id="actorDetails"></div>
+
+    <h1>Actors & Actresses from Arkansas</h1>
+    <ul class="actor-list" id="actorList"></ul>
+
+    <div class="actor-details" id="actorDetails" style="display:none;"></div>
+
+    <script>
+        const apiKey = '257c2dffd5a19ea29083b6b181ceedb0'; // Replace with your own TMDb API key
+
+        const actors = [
+            { name: "Billy Bob Thornton", arkansasTie: "Born in Hot Springs, Arkansas." },
+            { name: "Mary Steenburgen", arkansasTie: "Born in Newport, Arkansas." },
+            { name: "Wes Bentley", arkansasTie: "Born in Jonesboro, Arkansas." },
+            { name: "Joey Lauren Adams", arkansasTie: "Born in North Little Rock, Arkansas." },
+            { name: "Lisa Blount", arkansasTie: "Born in Fayetteville, Arkansas." },
+            { name: "Gil Gerard", arkansasTie: "Born in Little Rock, Arkansas." },
+            { name: "Alan Ladd", arkansasTie: "Born in Hot Springs, Arkansas." },
+            { name: "Johnny Cash", arkansasTie: "Famous musician and actor; born in Kingsland, Arkansas." },
+            { name: "Daniel Davis", arkansasTie: "Born in Gurdon, Arkansas; known for *The Nanny*." },
+            { name: "Kaitlyn Maher", arkansasTie: "Family roots in Arkansas." },
+            { name: "Frank Bonner", arkansasTie: "Born in Little Rock, Arkansas; known for *WKRP in Cincinnati*." },
+            { name: "Corin Nemec", arkansasTie: "Moved to Arkansas later in life." },
+            { name: "Don Tyson", arkansasTie: "Appeared in documentaries; born in Arkansas." },
+            { name: "Megan Fox", arkansasTie: "Has family ties to Arkansas through her mother." },
+            { name: "Bill Clinton", arkansasTie: "Born in Hope, Arkansas; appeared in numerous documentaries and cameos." },
+            { name: "Jason Ritter", arkansasTie: "Family has Arkansas roots." },
+            { name: "Shawn Ashmore", arkansasTie: "Raised partially in Arkansas." },
+            { name: "Cleo King", arkansasTie: "Family connections to Arkansas." },
+            { name: "Billy Crudup", arkansasTie: "Attended college in Arkansas briefly." },
+            { name: "John Grisham", arkansasTie: "Born in Jonesboro; actor in his own adaptations." }
+        ];
+
+        const actorList = document.getElementById('actorList');
+        const actorDetails = document.getElementById('actorDetails');
+
+        actors.forEach(actor => {
+            const li = document.createElement('li');
+            li.textContent = actor.name;
+            li.addEventListener('click', () => fetchActorInfo(actor));
+            actorList.appendChild(li);
+        });
+
+        function fetchActorInfo(actor) {
+            fetch(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(actor.name)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.results.length > 0) {
+                        const actorData = data.results[0];
+                        const profilePath = actorData.profile_path ? `https://image.tmdb.org/t/p/w300${actorData.profile_path}` : '';
+                        const knownFor = actorData.known_for?.map(item => item.title || item.name).slice(0, 5).join(', ') || 'Not available';
+
+                        const html = `
+                            <h2>${actor.name}</h2>
+                            ${profilePath ? `<img src="${profilePath}" alt="${actor.name} photo">` : ''}
+                            <p><strong>Known For:</strong> ${knownFor}</p>
+                            <p><strong>Arkansas Connection:</strong> ${actor.arkansasTie}</p>
+                        `;
+                        actorDetails.innerHTML = html;
+                        actorDetails.style.display = 'block';
+                    } else {
+                        actorDetails.innerHTML = `<h2>${actor.name}</h2><p>No additional info found.</p><p><strong>Arkansas Connection:</strong> ${actor.arkansasTie}</p>`;
+                        actorDetails.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching actor info:', error);
+                    actorDetails.innerHTML = `<h2>${actor.name}</h2><p>Error retrieving actor info.</p>`;
+                    actorDetails.style.display = 'block';
+                });
+        }
+    </script>
+
 </body>
 </html>
