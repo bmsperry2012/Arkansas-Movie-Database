@@ -21,13 +21,8 @@
     <a href="movies.html" target="_blank">🎬 Movies</a>
     <a href="actors.html" target="_blank">⭐ Actors</a>
     <a href="submit.html" target="_blank">✍️ Submit New</a>
+    </body>
 </nav>
-
-
-    <section id="moviesTab" class="tab">
-        <h2>Movies with Ties to Arkansas</h2>
-        <ul id="movieList"></ul>
-        <div id="movieDetails"></div>
     </section>
 
     <section id="actorsTab" class="tab" style="display:none;">
@@ -49,7 +44,16 @@
             <label>Notes: <textarea name="notes"></textarea></label><br>
             <button type="submit">Submit</button>
         </form>
-        <div id="submissionStatus"></div>
+        <div id="submissionStatus" style="
+        background-image: url('assets/images/arkansas.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 400px;
+        padding-left: 20px;
+        border-radius: 10px;
+        color: white;
+        ">
+        </div>
     </section>
 
     <script src="script.js"></script>

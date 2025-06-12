@@ -1,7 +1,13 @@
-body {
+ body {
+    background-image: url('assets/images/arkansas.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f9f9f9;
+    color: white; /* optional for readability */
+}
 }
 
 h1 {
